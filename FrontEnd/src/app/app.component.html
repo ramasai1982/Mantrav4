@@ -8,6 +8,13 @@
         <div class="d-flex">
         <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addModal">Ajouter un(e) salarié(e)</button>
         </div>
+        <div class="dropdown float-lg-end">
+          <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Compétences</button>
+          <div class="dropdown-menu">
+              <a role="button" data-bs-toggle="modal" data-bs-target="#addSkillModal"><i class="fa fa-plus" aria-hidden="true"> </i> Ajouter</a><br>
+              <a role="button" data-bs-toggle="modal" data-bs-target="#deleteSkillModal"><i class="fa fa-remove" aria-hidden="true"></i> Supprimer</a>
+          </div>
+        </div>
         <div class="d-flex">
         <form [formGroup]='searchForm' (ngSubmit)="searchEmployee(searchForm)" role="search">
           <div class="form-group">
@@ -61,7 +68,12 @@
                           <p>
                             <span>Contrat:      </span><span>      {{employee.positionType}}</span><br>
                             <span>Date d'entrée: </span><span> {{employee.startDate}}</span><br>
-                            <span>Addresse:     </span><span>     {{employee.street}} {{employee.pinCode}} {{employee.city}}</span></p>
+                            <span>Addresse:     </span><span>     {{employee.street}} {{employee.pinCode}} {{employee.city}}</span>
+                          </p>
+                          <span *ngFor = "let skillList of employee.skill; let isLast=last">
+                            {{skillList.comp}}
+                            <span *ngIf="!isLast">,</span>
+                          </span>
                         </div>
                         <div class="col-lg-3 col-md-1 col-0.5">
                           <div class="dropdown float-lg-end">
@@ -72,7 +84,6 @@
                             </div>
                           </div>
                         </div>
-
                     </div>
                 </div>                    
             </div>
@@ -152,7 +163,7 @@
                     <small *ngIf="addForm.controls['email'].errors?.required">Ce champ est requis</small>
                     <small *ngIf="addForm.controls['email'].errors?.pattern">Ce champ n'est pas valid</small>
                   </div>
-                  <label> Numéro de contacte </label>
+                  <label> Numéro de contact </label>
                   <input
                   type="text"
                   placeholder="0123456789 ou +3312345678"
@@ -263,7 +274,6 @@
       <div class="form-area">
         <form [formGroup]='editForm' (ngSubmit)="editEmployees(editForm)">
         <div class="modal-header">
-          
           <h1 class="modal-title fs-5" id="editModalLabel">Modifier</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" (click)=onClose(editForm) aria-label="Close" ></button>
         </div>
@@ -329,7 +339,7 @@
                     <small *ngIf="editForm.controls['email'].errors?.required">Ce champ est requis</small>
                     <small *ngIf="editForm.controls['email'].errors?.pattern">Ce champ n'est pas valid</small>
                   </div>
-                  <label> Numéro de contacte </label>
+                  <label> Numéro de contact </label>
                   <input
                   type="text"
                   placeholder="0123456789 ou +3312345678"
@@ -427,7 +437,13 @@
                         formControlName='linkedIn'
                         >
                       </div>
+                      <div><br>
+                        <button type="button" class="btn btnInfo btn-light" data-bs-toggle="modal" data-bs-target="#linkSkillToEmployeeModal" (click)=tempSkillAddEmployee()>
+                          Associer des comptétences
+                        </button>
+                      </div>
               </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)=onClose(editForm) >Annuler</button>
               <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid" data-bs-dismiss="modal">Modifier</button>
@@ -482,3 +498,18 @@
     </div>
   </div>
 </div>
+
+<!-- Add Skill Modal-->
+<div class="modal fade" id="addSkillModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="skillModalLabel" aria-hidden="true">
+ <app-skill [selectModal] = "addSkillModal"></app-skill>
+</div>
+
+<!-- Link Skill to en Employee Modal-->
+<div class="modal fade" id="linkSkillToEmployeeModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="skillToEmployeeModalLabel" aria-hidden="true">
+  <app-skill [selectModal] = "linkSkillToEmployeeModal" [employeeToLink]='employeeToLink'></app-skill>
+ </div>
+
+<!-- Delete Skill Modal-->
+<div class="modal fade" id="deleteSkillModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="skillModalLabel" aria-hidden="true">
+  <app-skill [selectModal] = "deleteSkillModal"></app-skill>
+ </div>

@@ -6,6 +6,7 @@ import { timer, interval } from 'rxjs';
 import { NgForm, Validators, FormControl, FormGroup, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Urls } from './enum/urls';
 import { Contrat } from './enum/contrat';
+import { Skill } from './skill/skill';
 
 @Component({
   selector: 'app-root',
@@ -26,13 +27,21 @@ export class AppComponent implements OnInit{
   phoneRegex: string = "^((\\+33-?)|0)?[0-9]{9}$";
   nameRegex: string = "^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$";
   imageUrl: string ="";
+  addSkillModal: string ="addSkillModal";
+  deleteSkillModal: string ="deleteSkillModal";
+  linkSkillToEmployeeModal: string = "linkSkillToEmployeeModal";
+  employeeToLink!: Employee;
+
+  person: Array<string> = ["r", "t", "i"]
 
  
   public employees: Employee[] | any;
   public tempEmployee!: Employee;
+  public skillList: Skill [] |any;
   public editEmployee!: Employee;
   public urls = Urls;
   public contrat = Contrat;
+
 
 
   public iteratorImage = Object.keys(this.urls)
@@ -72,14 +81,17 @@ export class AppComponent implements OnInit{
         Validators.pattern(this.phoneRegex)
       ]],
       dob: [],
+      skill:[],
       imageUrl: [],
       linkedIn: [],
-      sex: []
+      sex: [],
+      hourlyPay:[]
 
     })
 
     this.editForm = fb.group({
       id: [],
+      skill:[],
       employeeCode: [],
       martialStatus:[],
       street:[],
@@ -110,7 +122,8 @@ export class AppComponent implements OnInit{
       dob: ["",],
       imageUrl: ["",],
       linkedIn: ["",],
-      sex: ["",]
+      sex: ["",],
+      hourlyPay:[]
     })
 
     this.searchForm = fb.group({
@@ -161,6 +174,7 @@ export class AppComponent implements OnInit{
 
   public tempEditEmployees(employee: Employee): void{
     this.editForm.setValue(employee);
+    this.tempEmployee = employee;
     console.log(this.editForm.value);
   }
   
@@ -236,6 +250,14 @@ export class AppComponent implements OnInit{
     }
   );
  }
+
+ public tempSkillAddEmployee(){
+  this.employeeToLink = this.tempEmployee;
+  console.log(this.employeeToLink);
+ }
+
+
+
 }
 
 

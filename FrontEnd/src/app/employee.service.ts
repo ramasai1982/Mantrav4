@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from './employee';
 import { environment } from 'src/environments/environment';
+import { Skill } from './skill/skill';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,6 @@ export class EmployeeService {
   public editEmployee(employee: Employee): Observable<Employee>{
     return this.http.put<Employee>(`${this.apiServerUrl}/employee/edit`, employee)
   }
+
+
 }

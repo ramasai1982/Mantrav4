@@ -1,0 +1,107 @@
+<p>skill works!</p>
+<div *ngIf = 'selectModal === "addSkillModal"'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="form-area">
+        <form [formGroup]='addSkillForm' (ngSubmit)="addSkill(addSkillForm)">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addSkillModalLabel">Ajouter des compétences</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)=onClose(addSkillForm)></button>
+        </div>
+        -<div class="list_skill">
+        <div *ngFor="let list of skills; let i = index">
+                <a class="btn btn-secondary">
+                    {{list.comp}}
+                </a>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="modal-body" type="reset">
+                  <label> Competence</label>
+                  <input
+                  type="text"
+                  placeholder="Java, Python "
+                  class="form-control"
+                  formControlName='comp'
+                  required
+                  >
+                    <div 
+                    class="alert alert-danger" 
+                    *ngIf="addSkillForm.controls['comp'].errors?.required
+                    && addSkillForm.controls['comp'].touched  && addSkillForm.controls['comp'].invalid"
+                    >
+                    Ce champ est requis
+                    </div><br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)=onClose(addSkillForm) >Annuler</button>
+              <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="addSkillForm.invalid" >Ajouter</button>
+            </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf = 'selectModal === "deleteSkillModal"'>
+  <div class="modal-dialog">
+    <div class="modal-content">   
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteSkillModalLabel">Supprimer des compétences</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)=onCloseDelete()></button>
+        </div>
+        <div class="list_skill">
+            <div *ngFor="let list of skills; let i = index">
+                <a type="button" class="btn btn-secondary" (click)="tempSkill(list)">
+                    {{list.comp}}
+                </a>
+            </div>
+        </div>
+        <div class="list_skill">
+          <div *ngFor="let listDelete of tempArray; last as isLast">
+              <a>
+                {{listDelete.comp}}
+                <span *ngIf="!isLast">,&nbsp;</span>
+              </a>
+          </div>
+          <span> -> à supprimer </span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)=onCloseDelete() >Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="tempArray.length===0" (click)="deleteSkill()">Supprimer</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf = 'selectModal === "linkSkillToEmployeeModal"'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addSkillModalLabel">Associer des compétences</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)=onCloseLinkSkill()></button>
+        </div>
+        <div class="list_skill">
+            <div *ngFor="let list of skills; let i = index">
+                <a type="button" class="btn btn-secondary" (click)="tempSkill(list)">
+                    {{list.comp}}
+                </a>
+            </div>
+        </div>
+        <div class="list_skill">
+          <div *ngFor="let listLink of tempArray; last as isLast">
+              <a class="btn btn-light">
+                {{listLink.comp}}
+                <span *ngIf="!isLast">,&nbsp;</span>
+              </a>
+          </div>
+            <span> -> à associer </span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)=onCloseLinkSkill() >Annuler</button>
+          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="tempArray.length===0" (click)="linkSkill()">Associer</button>
+        </div>
+    </div>
+  </div>
+</div>

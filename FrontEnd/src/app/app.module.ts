@@ -10,11 +10,15 @@ import { EmployeeService } from './employee.service';
 import { FormsModule } from '@angular/forms';
 import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SkillComponent } from './skill/skill.component';
+import { ArrayStringPipe } from './pipes/array-string.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PhoneNumberPipe
+    PhoneNumberPipe,
+    SkillComponent,
+    ArrayStringPipe
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,9 @@
+.list_skill{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0.75em;
+}
+.btn{
+    padding: auto;
+    margin: 0.3em;
+}
