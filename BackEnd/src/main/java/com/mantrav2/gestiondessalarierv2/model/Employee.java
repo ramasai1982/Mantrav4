@@ -1,9 +1,14 @@
 package com.mantrav2.gestiondessalarierv2.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 
 
 @Getter
@@ -15,12 +20,12 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long id;
-    @Setter
+
     @Column(nullable = false)
+    @Setter
     private String employeeCode;
     @Setter
     private String civility;
-
     @Setter
     private String martialStatus;
     @Setter
@@ -29,7 +34,7 @@ public class Employee implements Serializable {
     private String firstName;
     @Setter
     @Column(length=12)
-    private String dob;
+    private Date dob;
     @Setter
     private String street;
     @Setter
@@ -43,12 +48,12 @@ public class Employee implements Serializable {
     private String email;
     @Setter
     @Column(length=6)
-    private String startDate;
+    private Date startDate;
     @Setter
     private String positionType;
     @Setter
     @Column(length=6)
-    private String endDate;
+    private Date endDate;
     @Setter
     private String imageUrl;
     @Setter
@@ -57,8 +62,18 @@ public class Employee implements Serializable {
     private String sex;
     @Setter
     private String jobTitle;
+    @Setter
+    private String hourlyPay;
+    @Setter
+    @ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinTable(name="ec_table",
+            joinColumns = @JoinColumn(name="id_fk"),
+            inverseJoinColumns = @JoinColumn(name = "idc_fk")
+    )
+    private Set<Skill> skill ;
 
-    public Employee(String civility, String martialStatus, String lastName, String firstName, String dob, String street, String city, String pinCode, String phone, String email, String startDate, String positionType, String endDate, String imageUrl, String linkedIn, String sex, String jobTitle) {
+
+    public Employee(String civility, String martialStatus, String lastName, String firstName, Date dob, String street, String city, String pinCode, String phone, String email, Date startDate, String positionType, Date endDate, String imageUrl, String linkedIn, String sex, String jobTitle, String hourlyPay, Set<Skill> skill) {
         this.civility = civility;
         this.martialStatus = martialStatus;
         this.lastName = lastName;
@@ -76,5 +91,7 @@ public class Employee implements Serializable {
         this.linkedIn = linkedIn;
         this.sex = sex;
         this.jobTitle = jobTitle;
+        this.hourlyPay = hourlyPay;
+        this.skill = skill;
     }
 }

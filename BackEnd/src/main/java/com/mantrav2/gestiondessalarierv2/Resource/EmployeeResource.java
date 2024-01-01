@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/employee")
@@ -43,6 +43,12 @@ public class EmployeeResource {
     public ResponseEntity<?> deleteEmployee(@PathVariable ("id") Long id){
         employeeService.deleteEmployeeById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/link")
+    public ResponseEntity<Employee> addSkill(@RequestBody Employee employee){
+        Employee employeeLink = employeeService.addSkillToEmployee(employee);
+        return new ResponseEntity<>(employeeLink, HttpStatus.OK);
     }
 
 }
