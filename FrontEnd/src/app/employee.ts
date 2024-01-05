@@ -1,3 +1,5 @@
+import { Skill } from "./skill/skill";
+
 export interface Employee {
     id: number;
     civility: string;
@@ -7,8 +9,9 @@ export interface Employee {
     employeeCode: string;
     jobTitle: string;
     phone: string;
-    dob:number;
+    dob:Date;
     imageUrl: string;
     linkedIn: string;
     sex: string;
+    skill: Array<Skill>;
 }

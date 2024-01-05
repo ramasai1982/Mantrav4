@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-
+import java.util.Date;
+import java.util.Set;
 
 @Getter
+@Setter
 @ToString
 @Entity
 @NoArgsConstructor
@@ -14,51 +16,62 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
+    @Setter(AccessLevel.NONE)
     private Long id;
-    @Setter
+
     @Column(nullable = false)
+
     private String employeeCode;
-    @Setter
+
     private String civility;
 
-    @Setter
     private String martialStatus;
-    @Setter
+
     private String lastName;
-    @Setter
+
     private String firstName;
-    @Setter
+
     @Column(length=12)
-    private String dob;
-    @Setter
+    private Date dob;
+
     private String street;
-    @Setter
+
     private String city;
-    @Setter
+
     @Column(length=5)
     private String pinCode;
-    @Setter
+
     private String phone;
-    @Setter
+
     private String email;
-    @Setter
+
     @Column(length=6)
-    private String startDate;
-    @Setter
+    private Date startDate;
+
     private String positionType;
-    @Setter
+
     @Column(length=6)
-    private String endDate;
-    @Setter
+    private Date endDate;
+
     private String imageUrl;
-    @Setter
+
     private String linkedIn;
-    @Setter
+
     private String sex;
-    @Setter
+
     private String jobTitle;
 
-    public Employee(String civility, String martialStatus, String lastName, String firstName, String dob, String street, String city, String pinCode, String phone, String email, String startDate, String positionType, String endDate, String imageUrl, String linkedIn, String sex, String jobTitle) {
+    private String hourlyPay;
+
+    @ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @JoinTable(name="ec_table",
+            joinColumns = @JoinColumn(name="id_fk"),
+            inverseJoinColumns = @JoinColumn(name = "idc_fk")
+    )
+    private Set<Skill> skill ;
+
+
+    public Employee(String civility, String martialStatus, String lastName, String firstName, Date dob, String street, String city, String pinCode, String phone, String email, Date startDate, String positionType, Date endDate, String imageUrl, String linkedIn, String sex, String jobTitle, String hourlyPay, Set<Skill> skill) {
         this.civility = civility;
         this.martialStatus = martialStatus;
         this.lastName = lastName;
@@ -76,5 +89,7 @@ public class Employee implements Serializable {
         this.linkedIn = linkedIn;
         this.sex = sex;
         this.jobTitle = jobTitle;
+        this.hourlyPay = hourlyPay;
+        this.skill = skill;
     }
 }

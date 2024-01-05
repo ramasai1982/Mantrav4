@@ -1,0 +1,93 @@
+<!--List All Employee-->
+<br>
+<div class="d-flex">
+  <form [formGroup]='searchForm' (ngSubmit)="searchEmployee(searchForm)" role="search">
+    <div class="form-group">
+    <input 
+    class="form-control" 
+    type="search" 
+    placeholder="Entrer le nom" 
+    aria-label="Search"
+    formControlName="search"
+    (keyup)="searchEmployee(searchForm)"
+    >
+    </div>
+  </form>
+</div><br>
+<div class="alert alert-danger" role="alert" *ngIf="searchResultNothing">
+  Aucun résultat trouvé
+</div>
+<div *ngFor="let employee of employees" class="container profile-page">
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-6">
+            <div class="card profile-header">
+                <div class="body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-5">
+                            <div class="profile-image float-md-right"> 
+                              <a role="button" (click)=tempEmployees(employee) data-bs-toggle="modal" data-bs-target="#avatarModal"><img  src={{employee.imageUrl}} alt="Avatar"/></a>
+                            </div>
+                        </div>
+                        <div  class="col-lg-3 col-md-4 col-5" >
+                            <h4 class="m-t-0 m-b-0"><strong>{{employee.lastName}} </strong>{{employee.firstName}}</h4>
+                            <p class="social-icon m-t-5 m-b-0">
+                              <a><strong>{{employee.jobTitle}}</strong></a><br>
+                              <a title="Phone" ><i class="fa fa-lg fa-phone" aria-hidden="true"></i> {{employee.phone}}</a><br>
+                              <a title="Email" ><i class="fa fa-lg fa-envelope" aria-hidden="true"></i> {{employee.email}}</a><br>
+                              <a title="LinkedIn" href={{employee.linkedIn}} target="_blank"><i class="fa fa-lg fa-linkedin-square" aria-hidden="true"></i></a>
+                            </p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-5">
+                          <p>
+                            <span>Contrat:      </span><span>      {{employee.positionType}}</span><br>
+                            <span>Date d'entrée: </span><span> {{employee.startDate | date: 'mediumDate' }}</span><br>
+                            <span>Addresse:     </span><span>     {{employee.street}} {{employee.pinCode}} {{employee.city}}</span>
+                          </p>
+                            <span *ngFor = "let skillList of employee.skill; let isLast=last">
+                            {{skillList.comp}}
+                            <span *ngIf="!isLast">,</span>
+                          </span>
+                        </div>
+                        <div class="col-lg-3 col-md-1 col-0.5">
+                          <div class="dropdown float-lg-end">
+                            <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <div class="dropdown-menu">
+                                <a role="button" (click)=tempEmployees(employee)  routerLink="/employee/edit" class="text-reset" ><i class="fa fa-edit" aria-hidden="true"></i> Modifier</a><br>
+                                <a role="button" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)=tempEmployees(employee) ><i class="fa fa-remove" aria-hidden="true"></i> Supprimer</a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div *ngIf='employee===null' class="alert alert-danger">
+                        AUCUN RÉSULTAT TROUVÉ
+                      </div>
+                </div>                    
+            </div>
+        </div>
+	</div>
+</div>
+
+<!--SEARCH RESULT NOT FOUND MESSAGE-->
+<div *ngIf="emptyEmployeeList" class="offcanvas-top"  tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+    <div class="alert alert-danger">
+      AUCUN RÉSULTAT TROUVÉ
+    </div>
+</div>
+
+<!-- Delete Employee Modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteModalLabel">Supprimer</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Voudriez-vous vraiment supprimer ce salarié ? 
+        </div>
+        <div class="modal-footer">
+            <button type="button" (click)="deleteEmployees()" class="btn btn-primary" data-bs-dismiss="modal" >Confirmer</button>
+        </div>
+        </div>
+    </div>
+</div>

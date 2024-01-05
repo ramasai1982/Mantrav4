@@ -1,0 +1,176 @@
+
+<!-- Add Employee Modal-->
+
+<div class="form-area">
+    <form [formGroup]='addForm' (ngSubmit)="addEmployee(addForm)">
+      <h1 class="modal-title fs-5">Ajouter un nouveau salarié</h1>
+        <div class="form-group">
+          <div class="modal-body" type="reset">
+              <label> Civilité</label>
+              <input
+              type="text"
+              placeholder="Civilité"
+              class="form-control"
+              formControlName='civility'
+              required
+              >
+                <div 
+                class="alert alert-danger" 
+                *ngIf="addForm.controls['civility'].errors?.SpaceNotAllowed
+                && addForm.controls['civility'].touched  && addForm.controls['civility'].invalid"
+                >
+                Ce champ est requis
+                </div>
+                <div 
+                class="alert alert-danger" 
+                *ngIf="addForm.controls['civility'].errors?.required
+                && addForm.controls['civility'].touched  && addForm.controls['civility'].invalid"
+                >
+                Ce champ est requis
+                </div> 
+              <label> Nom de famille</label>
+              <input
+              type="text"
+              placeholder="Nom de famille"
+              class="form-control"
+              formControlName='lastName'
+              required
+              >
+                <div 
+                class="alert alert-danger" 
+                *ngIf="addForm.controls['lastName'].errors?.required
+                && addForm.controls['lastName'].touched  && addForm.controls['lastName'].invalid"
+                >
+                Ce champ est requis
+                </div> 
+              <label> Prénom</label>
+              <input
+              type="text"
+              placeholder="Prénom"
+              class="form-control"
+              formControlName='firstName'
+              required
+              >
+                <div 
+                class="alert alert-danger" 
+                *ngIf="addForm.controls['firstName'].errors?.required
+                && addForm.controls['firstName'].touched  && addForm.controls['firstName'].invalid"
+                >
+              Ce champ est requis
+              </div>
+              <label> Addresse électronique </label>
+              <input
+              type="email"
+              placeholder="aaaa@domain.com"
+              class="form-control"
+              formControlName='email'
+              required
+              >
+                <div 
+                class="alert alert-danger" 
+                *ngIf="addForm.controls['email'].touched  && addForm.controls['email'].invalid"
+                >
+                <small *ngIf="addForm.controls['email'].errors?.required">Ce champ est requis</small>
+                <small *ngIf="addForm.controls['email'].errors?.pattern">Ce champ n'est pas valid</small>
+              </div>
+              <label> Numéro de contact </label>
+              <input
+              type="text"
+              placeholder="0123456789 ou +3312345678"
+              class="form-control"
+              formControlName='phone'
+              required
+              >
+                <div 
+                class="alert alert-danger" 
+                *ngIf="addForm.controls['phone'].touched  && addForm.controls['phone'].invalid"
+                >
+                <small *ngIf="addForm.controls['phone'].errors?.required">Ce champ est requis</small>
+                <small *ngIf="addForm.controls['phone'].errors?.pattern">Ce champ n'est pas valid. Veuillez utiliser le format 0123456789 ou +33123456789</small>
+                </div><br>
+                <button class="btn btnInfo btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#furtherInfo">
+                  Information complémentaire
+                </button>  
+                <div class="collapse"  id="furtherInfo"><br>
+                    <label> Date de naissance</label>
+                    <input
+                    type="date"
+                    placeholder="JJ/MM/AAAA"
+                    class="form-control"
+                    formControlName='dob'
+                    >
+                    <label> Image URL </label>
+                    <input
+                    type="text"
+                    placeholder="Lien image url..."
+                    class="form-control"
+                    formControlName='imageUrl'
+                    >
+                    <label> Fonction </label>
+                    <input
+                    type="text"
+                    placeholder="Développeur, Testeur, etc,"
+                    class="form-control"
+                    formControlName='jobTitle'
+                    >
+                    <label> Type de contrat </label>
+                    <select class="form-control" formControlName="positionType">
+                      <option *ngFor="let list of iteratorPosition" [value]="list">{{list}}</option>
+                    </select>
+                    <label> Numéro et nom de la rue </label>
+                    <input
+                    type="text"
+                    placeholder="Numéro et nom de la rue"
+                    class="form-control"
+                    formControlName='street'
+                    >
+                    <label> Code postal </label>
+                    <input
+                    type="text"
+                    placeholder="Code postal"
+                    class="form-control"
+                    formControlName='pinCode'
+                    >
+                    <label> Ville </label>
+                    <input
+                    type="text"
+                    placeholder="Ville"
+                    class="form-control"
+                    formControlName='city'
+                    >
+                    <label> Date d'entrée </label>
+                    <input
+                    type="date"
+                    placeholder="JJ/MM/AAAA"
+                    class="form-control"
+                    formControlName='startDate'
+                    >
+                    <label> Date de sortie (si connue) </label>
+                    <input
+                    type="date"
+                    placeholder="JJ/MM/AAAA"
+                    class="form-control"
+                    formControlName='positionType'
+                    >
+                    <label>Sexe</label>
+                    <select class="form-control" formControlName="sex">
+                      <option value="Homme">Homme</option>
+                      <option value="Femme">Femme</option>
+                    </select>
+                    <label> LinkedIn </label>
+                    <input
+                    type="text"
+                    placeholder="Lien LinkedIn"
+                    class="form-control"
+                    formControlName='sex'
+                    >
+                </div><br>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" routerLink="/employee" >Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="addForm.invalid" >Ajouter</button>
+        </div>
+    </div>
+    </form>
+  </div>
+  
