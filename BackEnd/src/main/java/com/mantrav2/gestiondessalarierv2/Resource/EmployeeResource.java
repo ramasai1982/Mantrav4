@@ -33,7 +33,7 @@ public class EmployeeResource {
         return new ResponseEntity<>(employeeEdit, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<Employee>> getEmployee(){
         List<Employee> employee = employeeService.getEmployee();
         return new ResponseEntity<>(employee, HttpStatus.OK);

@@ -1,17 +1,14 @@
 package com.mantrav2.gestiondessalarierv2.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-
 @Getter
+@Setter
 @ToString
 @Entity
 @NoArgsConstructor
@@ -19,52 +16,53 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @Column(nullable = false)
-    @Setter
+
     private String employeeCode;
-    @Setter
+
     private String civility;
-    @Setter
+
     private String martialStatus;
-    @Setter
+
     private String lastName;
-    @Setter
+
     private String firstName;
-    @Setter
+
     @Column(length=12)
     private Date dob;
-    @Setter
+
     private String street;
-    @Setter
+
     private String city;
-    @Setter
+
     @Column(length=5)
     private String pinCode;
-    @Setter
+
     private String phone;
-    @Setter
+
     private String email;
-    @Setter
+
     @Column(length=6)
     private Date startDate;
-    @Setter
+
     private String positionType;
-    @Setter
+
     @Column(length=6)
     private Date endDate;
-    @Setter
+
     private String imageUrl;
-    @Setter
+
     private String linkedIn;
-    @Setter
+
     private String sex;
-    @Setter
+
     private String jobTitle;
-    @Setter
+
     private String hourlyPay;
-    @Setter
+
     @ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
     @JoinTable(name="ec_table",
             joinColumns = @JoinColumn(name="id_fk"),
