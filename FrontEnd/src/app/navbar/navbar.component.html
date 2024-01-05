@@ -1,0 +1,25 @@
+<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand" >MANTRA - Gestion des salariés</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="d-flex">
+            
+            <button type="button" class="btn btn-light" routerLink="/employee/add">Ajouter un(e) salarié(e)</button>
+          </div>
+          <div class="d-flex">
+            <button type="button" class="btn btn-light" routerLink="/employee">Liste des salariés</button>
+            
+          </div>
+          <div class="dropdown float-lg-end">
+            <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Compétences</button>
+            <div class="dropdown-menu">
+                <a role="button" data-bs-toggle="modal" data-bs-target="#addSkillModal"><i class="fa fa-plus" aria-hidden="true"> </i> Ajouter</a><br>
+                <a role="button" data-bs-toggle="modal" data-bs-target="#deleteSkillModal"><i class="fa fa-remove" aria-hidden="true"></i> Supprimer</a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </nav>

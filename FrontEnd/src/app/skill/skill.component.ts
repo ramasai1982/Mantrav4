@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Form, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SkillService } from './skill.service';
-import { Skill } from './skill';
-import { EmployeeService } from '../employee.service';
-import { Employee } from '../employee';
+import { SkillService } from '../service/skill.service';
+import { Skill } from '../model/skill';
+import { Employee } from '../model/employee';
 import { __values } from 'tslib';
+import { EmployeeLinkService } from '../service/employee-link.service';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-skill',
@@ -17,6 +18,7 @@ export class SkillComponent {
   linkSKillForm: any;
   deleteSkillForm: any;
   nameRegex: string = "^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$";
+
   @Input() selectModal!: string;
   @Input() employeeToLink! : Employee;
   
@@ -27,7 +29,7 @@ export class SkillComponent {
   public tempCount: boolean = false;
   
 
-constructor(fb: FormBuilder, private skillService: SkillService){
+constructor(fb: FormBuilder, private skillService: SkillService, private employeeLinkService: EmployeeLinkService, private router: Router){
   this.addSkillForm = fb.group({
     comp:['',[
       Validators.required,
@@ -83,6 +85,7 @@ constructor(fb: FormBuilder, private skillService: SkillService){
 
 ngOnInit() {
   this.getSkill();
+
 }
 
 public getSkill(): void {
@@ -93,11 +96,11 @@ public getSkill(): void {
       alert(error.message);
     }
   )
+  
 }
 
 public tempSkill(skill: Skill){
-  this.tempArray=this.employeeToLink.skill;
-  console.log(skill.idC, this.tempArray.length);
+  console.log(skill.idC);
   for(const search of this.tempArray){
     console.log(search);
     if((search.comp.toLowerCase().indexOf(skill.comp.toLowerCase())) !== -1){
@@ -114,6 +117,7 @@ public tempSkill(skill: Skill){
   this.tempCount = false;
 }
 
+
 public deleteSkill(): void{
   console.log(this.tempArray);
 
@@ -122,6 +126,7 @@ public deleteSkill(): void{
     this.skillService.deleteSkill(tempList.idC).subscribe(
       (_response: void) => {
         this.getSkill();
+        window.location.reload();
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
@@ -138,6 +143,7 @@ public addSkill(addSkillForm: NgForm): void{
       console.log(response.comp)
       addSkillForm.reset();
       this.getSkill();
+      window.location.reload();
     },
     (error: HttpErrorResponse) => {
       alert(error.message);
@@ -146,19 +152,28 @@ public addSkill(addSkillForm: NgForm): void{
 }
 
 public linkSkill(): void{
-
-  console.log(this.employeeToLink);
-  this.employeeToLink.skill=this.tempArray;
-  this.linkSKillForm.setValue(this.employeeToLink);
-
+  for(const skillAll of this.employeeLinkService.employeeToLink.skill){
+    this.tempArray.push(skillAll);
+  }
+  
+  this.employeeLinkService.employeeToLink.skill=this.tempArray;
+  console.log(this.tempArray);
+  this.linkSKillForm.setValue(this.employeeLinkService.employeeToLink);
+  console.log(this.linkSKillForm.value);
   this.skillService.addSkillToEmployee(this.linkSKillForm.value).subscribe(
     (_response: Employee) => {
       console.log(this.linkSKillForm.values)
+      this.tempArray=[];
+      this.getSkill();
     },
     (error: HttpErrorResponse) => {
       alert(error.message)
     }
   );
+  this.router.navigate(['/employee'])
+  .then(() => {
+    window.location.reload();
+  });
 }
 
 public onClose(formData: FormGroup): void{
