@@ -79,13 +79,10 @@ constructor(fb: FormBuilder, private skillService: SkillService, private employe
       Validators.pattern(this.nameRegex)
     ]]
   })
-
-
 }
 
 ngOnInit() {
   this.getSkill();
-
 }
 
 public getSkill(): void {
@@ -129,7 +126,7 @@ public deleteSkill(): void{
         window.location.reload();
       },
       (error: HttpErrorResponse) => {
-        alert(error.message)
+        alert('Vérifier que cette compétences est déjà associer à un employer avant de supprimer')
       }
     );
   }
@@ -165,15 +162,16 @@ public linkSkill(): void{
       console.log(this.linkSKillForm.values)
       this.tempArray=[];
       this.getSkill();
+      this.router.navigate(['/employee'])
+      .then(() => {
+        window.location.reload();
+      });
     },
     (error: HttpErrorResponse) => {
       alert(error.message)
     }
   );
-  this.router.navigate(['/employee'])
-  .then(() => {
-    window.location.reload();
-  });
+
 }
 
 public onClose(formData: FormGroup): void{

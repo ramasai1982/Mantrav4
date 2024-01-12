@@ -4,7 +4,10 @@ import { EmployeeService } from '../service/employee.service';
 import { Employee } from '../model/employee';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeeLinkService } from '../service/employee-link.service';
-import { Router } from '@angular/router';
+import { interval, map, of, tap } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @Component({
   selector: 'app-list-employee',
@@ -19,17 +22,23 @@ export class ListEmployeeComponent implements OnInit {
   emailRegex: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   phoneRegex: string = "^((\\+33-?)|0)?[0-9]{9}$";
   nameRegex: string = "^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$";
+  h!: number; 
 
   employeeArray!: Employee[];
   employeeToLink!: Employee;
+  employee!: Employee;
   searchResultNothing: boolean = false;
   emptyEmployeeList: boolean = false;
   newItemEvent: any;
+  isInProgress!: boolean;
+
 
   public employees: Employee[] | any;
   public tempEmployee!: Employee;
 
-  constructor (fb: FormBuilder, private employeeService: EmployeeService, private employeeLinkService: EmployeeLinkService) {
+  constructor (fb: FormBuilder,
+                private employeeService: EmployeeService,
+                private employeeLinkService: EmployeeLinkService) {
     this.addForm = fb.group({
       martialStatus:[],
       street:[],
@@ -68,32 +77,58 @@ export class ListEmployeeComponent implements OnInit {
     })
 
     
-  this.searchForm = fb.group({
+    this.searchForm = fb.group({
     search: []
   });
   }
 
+  loading: any;
   ngOnInit() {
     this.getEmployees();
   }
-
-
   public tempEmployees(employeeToLink: Employee){
     this.employeeLinkService.employeeToLink = employeeToLink;
     this.tempEmployee = employeeToLink;
   }
 
-  public getEmployees(): void {
-    this.employeeService.getEmployees().subscribe(
+    
+  public exportFile(employeeToExport: Employee): void{
+    console.log(employeeToExport);
+    var str = JSON.stringify(employeeToExport);
+    console.log(str);
+
+    let filename = `dataexport.${Date.now()}.csv`;    
+    console.log(filename);            //create filename
+    let file = new File([str], filename, {type: 'text/csv'});     //create file
+    console.log(file);   
+    let a = document.createElement('a');    //create anchor
+    a.href = URL.createObjectURL(file);
+    a.download = filename;
+  }
+
+  public tempEmployeeMission(employeeToLink: Employee){
+    this.employeeLinkService.missionList.push([{"mission": employeeToLink.mission}, employeeToLink.lastName, employeeToLink.firstName]);
+  }
+
+  public getEmployees(): any {
+    this.employeeService.getEmployees().pipe(
+      tap(() => {
+        this.isInProgress = true,  console.log("Starts")
+      }),
+      tap(() => {       
+        this.isInProgress= false, console.log("Ends")})
+    ).subscribe( 
       (response: Employee[]) => {
         this.employees = response;
+        console.log("at")
         for (const employeeList of this.employees){
           if (employeeList===null){
             this.emptyEmployeeList=true;
           }
         }
         this.employeeArray = response;
-      }, (error: HttpErrorResponse) =>{
+      },
+      (error: HttpErrorResponse) =>{
         alert(error.message);
       }
     )
@@ -137,3 +172,7 @@ export class ListEmployeeComponent implements OnInit {
     );
    }
 }
+function ngOnDestroy() {
+  throw new Error('Function not implemented.');
+}
+

@@ -3,16 +3,6 @@ body{
     background:#eceaea;    
 }
 
-a:link {
-    text-decoration: none;
-}
-
-a:link:hover {
-    color:#e0e0e0;
-}
-.text-reset{
-    color: inherit!important;
-  }
 
 .card {
     background: #884848;    
@@ -77,18 +67,23 @@ a:link:hover {
 }
 .dropdown:hover {
     display: block;
+    color: black;
   }
 
 .dropdown-menu {
     position: absolute;
-    background-color: #eee;
-    color: #424242;
-    min-width: 140px;
+    background-color: #555252;
+    color: white;
+    min-width: 190px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 12px 16px;
     z-index: 2;
   }
 .dropdown-menu a:hover{
-    background-color: #4e4a4a;
-    color: #e6dcdc;
+    background-color: #725252;
+    color: white;
+}
+.dropdown-menu a:hover:link{
+    background-color: #725252;
+    color: white;
 }

@@ -14,6 +14,7 @@
     </div>
   </form>
 </div><br>
+<mat-spinner *ngIf="isInProgress" ></mat-spinner>
 <div class="alert alert-danger" role="alert" *ngIf="searchResultNothing">
   Aucun résultat trouvé
 </div>
@@ -46,13 +47,16 @@
                             <span *ngFor = "let skillList of employee.skill; let isLast=last">
                             {{skillList.comp}}
                             <span *ngIf="!isLast">,</span>
-                          </span>
+                            </span><br>
                         </div>
                         <div class="col-lg-3 col-md-1 col-0.5">
                           <div class="dropdown float-lg-end">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                             <div class="dropdown-menu">
-                                <a role="button" (click)=tempEmployees(employee)  routerLink="/employee/edit" class="text-reset" ><i class="fa fa-edit" aria-hidden="true"></i> Modifier</a><br>
+                                <a role="button" (click)=tempEmployees(employee)  routerLink="/employee/edit" class="text-reset" ><i class="fa fa-laptop" aria-hidden="true"></i> Compétences</a><br>
+                                <a role="button" (click)=tempEmployees(employee)  routerLink="/mission/missionEmployee" class="text-reset" ><i class="fa fa-tasks" aria-hidden="true"></i> Mission</a><br>
+                                <a role="button" (click)=tempEmployees(employee)  [routerLink]="['/employee/exp']" [queryParams]="{form: 'edit'}" class="text-reset" ><i class="fa fa-edit" aria-hidden="true"></i> Autre modification</a><br>
+                                <a role="button" (click)=tempEmployees(employee)  (click)=exportFile(employee) class="text-reset" ><i class="fa fa-laptop" aria-hidden="true"></i> Exporter</a><br>
                                 <a role="button" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)=tempEmployees(employee) ><i class="fa fa-remove" aria-hidden="true"></i> Supprimer</a>
                             </div>
                           </div>

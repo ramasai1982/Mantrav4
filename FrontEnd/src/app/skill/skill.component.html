@@ -1,3 +1,4 @@
+<!-- Add Skill Modal-->
 <div *ngIf = 'selectModal === "addSkillModal"'>
   <div class="modal-dialog">
     <div class="modal-content">
@@ -43,6 +44,7 @@
   </div>
 </div>
 
+<!-- Delete Skill Modal-->
 <div *ngIf = 'selectModal === "deleteSkillModal"'>
   <div class="modal-dialog">
     <div class="modal-content">   
@@ -74,7 +76,7 @@
   </div>
 </div>
 
-<!-- Link Skill to en Employee Modal-->
+<!-- Link Skill to an Employee Modal-->
 <div *ngIf = 'selectModal === "linkSkillToEmployeeModal"'>
   <div class="modal-dialog">
     <div class="modal-content">
@@ -84,7 +86,7 @@
         </div>
         <div><p>Clicker sur les compétences à associer</p></div>
         <div class="list_skill">
-            <div *ngFor="let list of skills; let i = index">
+            <div *ngFor="let list of skills">
                 <a type="button" class="btn btn-secondary" (click)="tempSkill(list)">
                     {{list.comp}}
                 </a>

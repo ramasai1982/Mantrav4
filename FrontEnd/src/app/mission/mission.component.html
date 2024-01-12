@@ -1,0 +1,23 @@
+<p>mission works!</p>
+<br>
+<div class="d-flex">
+</div><br>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Organisation</th>
+        <th scope="col">Période</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let missionList of missionToDisplay; let index = index">
+        <th scope="row">{{index+1}}</th>
+        <td>{{missionList.company}}</td>
+        <td>{{missionList.startDate | date: 'mediumDate'}} à {{missionList.endDate | date: 'mediumDate'}}</td>
+        <td>{{missionList.description}}</td>
+      </tr>
+    </tbody>
+  </table>

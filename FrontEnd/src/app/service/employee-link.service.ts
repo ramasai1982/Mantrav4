@@ -8,6 +8,7 @@ export class EmployeeLinkService {
 
   employeeToLink!: Employee;
   selectModal!: string;
+  missionList: Array<any> = [];
   
   constructor() { }
 

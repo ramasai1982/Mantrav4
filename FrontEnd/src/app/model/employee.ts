@@ -1,3 +1,4 @@
+import { Mission } from "./mission";
 import { Skill } from "./skill";
 
 export interface Employee {
@@ -14,4 +15,5 @@ export interface Employee {
     linkedIn: string;
     sex: string;
     skill: Array<Skill>;
+    mission: Array<Mission>;
 }

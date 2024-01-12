@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../model/employee';
 import { environment } from 'src/environments/environment';
-import { Skill } from '../model/skill';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
 
 @Injectable()
 export class EmployeeService {
@@ -19,15 +18,15 @@ export class EmployeeService {
   }
 
   public addEmployee(employee: Employee): Observable<Employee>{
-    return this.http.post<Employee>(`${this.apiServerUrl}/employee/add`, employee)
+    return this.http.post<Employee>(`${this.apiServerUrl}/employee/add`, employee);
   }
 
-  public deleteEmployee(employeeId: number|undefined): Observable<void>{
-    return this.http.delete<void>(`${this.apiServerUrl}/employee/delete/${employeeId}`)
+  public deleteEmployee(employeeId: number| undefined): Observable<void>{
+    return this.http.delete<void>(`${this.apiServerUrl}/employee/delete/${employeeId}`);
   }
 
   public editEmployee(employee: Employee): Observable<Employee>{
-    return this.http.put<Employee>(`${this.apiServerUrl}/employee/edit`, employee)
+    return this.http.put<Employee>(`${this.apiServerUrl}/employee/edit`, employee);
   }
 
 

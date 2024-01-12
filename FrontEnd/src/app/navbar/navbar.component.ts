@@ -1,23 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, NgForm } from '@angular/forms';
-import { EmployeeService } from '../service/employee.service';
+import { NgForm } from '@angular/forms';
 import { Employee } from '../model/employee';
 import { interval } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent{
+  addForm: string = "addForm";
   searchForm: any;
   employees: Employee[] = [];
   searchResultNothing: boolean = false;
   @Input() employeeArray! : Employee[];
   
-constructor(fb: FormBuilder, private employeeService: EmployeeService){
-
-
-}
+constructor(private router: Router){}
 
 
 public searchEmployee(key: NgForm): void{
@@ -37,14 +35,12 @@ public searchEmployee(key: NgForm): void{
     interval(2500).subscribe(n => 
       {if(n===0){
         this.searchResultNothing = false;
-        
         key.reset();
       }}
       );
   }
   console.log(key.value.search);
   if(key.value.search===null || key.value.search.length===0){
-    
     console.log(key.value.search);
   }
 
