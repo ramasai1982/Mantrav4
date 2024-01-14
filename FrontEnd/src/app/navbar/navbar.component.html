@@ -16,8 +16,8 @@
           <div class="dropdown float-lg-end">
             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Compétences</button>
             <div class="dropdown-menu">
-                <a role="button" data-bs-toggle="modal" data-bs-target="#addSkillModal"><i class="fa fa-plus" aria-hidden="true"> </i> Ajouter</a><br>
-                <a role="button" data-bs-toggle="modal" data-bs-target="#deleteSkillModal"><i class="fa fa-remove" aria-hidden="true"></i> Supprimer</a>
+                <a role="button" [routerLink]="['/employee/skill']" [queryParams]="{selectModal: 'addSkillModal'}"  class="text-reset" ><i class="fa fa-plus" aria-hidden="true"> </i> Ajouter</a><br>
+                <a role="button" [routerLink]="['/employee/skill']" [queryParams]="{selectModal: 'deleteSkillModal'}"  class="text-reset" ><i class="fa fa-remove" aria-hidden="true"></i> Supprimer</a>
             </div>
           </div>
       </div>

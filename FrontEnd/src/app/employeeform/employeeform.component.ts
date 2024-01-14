@@ -8,6 +8,7 @@ import { EmployeeLinkService } from '../service/employee-link.service';
 import { Router } from '@angular/router'
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-employeeform',
   templateUrl: './employeeform.component.html',
@@ -16,7 +17,6 @@ import { ActivatedRoute } from '@angular/router';
 export class EmployeeformComponent implements OnInit{
 
   formEmployee: any;
-  add:string = "add";
   emailRegex: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
   phoneRegex: string = "^((\\+33-?)|0)?[0-9]{9}$";
   nameRegex: string = "^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$";
@@ -29,6 +29,7 @@ export class EmployeeformComponent implements OnInit{
   public visible: boolean = false;
   public collapse!: string;
 
+
   public iteratorPosition = Object.keys(this.contrat)
   .filter((v) => isNaN(Number(v)));
 
@@ -40,11 +41,14 @@ export class EmployeeformComponent implements OnInit{
       console.log(this.formSelect);
       this.reload(this.formSelect);
     });
-    
   } 
 
   
-constructor(fb: FormBuilder, private employeeService: EmployeeService, private employeeLinkService: EmployeeLinkService, private router: Router, private route: ActivatedRoute){
+constructor(fb: FormBuilder,
+  private employeeService: EmployeeService,
+  private employeeLinkService: EmployeeLinkService,
+  private router: Router,
+  private route: ActivatedRoute){
 
 
   
@@ -86,7 +90,6 @@ constructor(fb: FormBuilder, private employeeService: EmployeeService, private e
   }) 
 }
 
-  
 
 private formatDate(date: Date) {
   
@@ -100,7 +103,6 @@ private formatDate(date: Date) {
   if (day.length < 2) day = '0' + day;
   return [year, month, day].join('-');
 }
-
 
 
 public actEmployees(formEmployee: NgForm): void{

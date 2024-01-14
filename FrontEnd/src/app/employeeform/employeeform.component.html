@@ -1,9 +1,8 @@
 <div class="form-area">
     <form [formGroup] ='formEmployee' (ngSubmit)="actEmployees(formEmployee)">
-      <div *ngIf="formSelect==='edit'" >
-        <h1 class="modal-title fs-5">Modification</h1>
+      <div  >
+        <h1 class="modal-title fs-5">{{formSelect === 'edit' ? "Modification" : "Ajouter un nouveau salarié"}}</h1>
       </div>
-        <h1  *ngIf="formSelect === 'add'" class="modal-title fs-5">Ajouter un nouveau salarié</h1>
         <div class="form-group">
           <div class="modal-body" type="reset">
               <label> Civilité</label>
@@ -157,19 +156,10 @@
                     formControlName='linkedIn'
                     >
                   </div>
-                  <div><br>
-                    <button type="button" class="btn btnInfo btn-dark" data-bs-toggle="modal" data-bs-target="#linkSkillToEmployeeModal" (click)=skillAddEmployee()>
-                      Associer des comptétences
-                    </button>
-                  </div>
-                    <div class="modal fade" id="linkSkillToEmployeeModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="skillToEmployeeModalLabel" aria-hidden="true">
-                    <app-skill [selectModal] = "linkSkillToEmployeeModal"></app-skill>
-                    </div>
           </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" routerLink="/employee" >Annuler</button>
-          <button *ngIf="formSelect === 'edit'" class="btn btn-primary" [disabled]="formEmployee.invalid" >Modifier</button>
-          <button *ngIf="formSelect === 'add'" type="submit" class="btn btn-primary" [disabled]="formEmployee.invalid" >Ajouter</button>
+          <button  type="submit" class="btn btn-primary"  [disabled]="formEmployee.invalid">{{ (formSelect === "edit") ? "Modifier" : "Ajouter" }}</button>
         </div>
     </div>
     </form>

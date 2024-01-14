@@ -21,11 +21,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EmployeeformComponent } from './employeeform/employeeform.component';
 
 
+
 const routes: Routes = [
   {path: '', component: HomepageComponent },
   {path: 'employee', component: ListEmployeeComponent },
   {path: 'mission/missionEmployee', component: MissionComponent},
-  {path: 'employee/exp', component: EmployeeformComponent}
+  {path: 'employee/exp', component: EmployeeformComponent},
+  {path: 'employee/skill', component: SkillComponent}
 ];
 
 @NgModule({

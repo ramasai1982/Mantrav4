@@ -4,5 +4,6 @@ export interface Mission{
     endDate: Date;
     company: string;
     description: string;
+    hourlyRate: number;
     em_fk: number;
 }

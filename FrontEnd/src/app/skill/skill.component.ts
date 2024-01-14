@@ -6,7 +6,7 @@ import { Skill } from '../model/skill';
 import { Employee } from '../model/employee';
 import { __values } from 'tslib';
 import { EmployeeLinkService } from '../service/employee-link.service';
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 
 @Component({
   selector: 'app-skill',
@@ -19,17 +19,25 @@ export class SkillComponent {
   deleteSkillForm: any;
   nameRegex: string = "^[a-zA-Z0-9]*[a-zA-Z]+[a-zA-Z0-9]*$";
 
-  @Input() selectModal!: string;
-  @Input() employeeToLink! : Employee;
+
+
   
   public skills: Skill[] | any;
   public tempArray: Skill[] = [];
   public tempSet: Set<Skill> = new Set<Skill>();
   public sendSkillArray: Array<any> = [];
   public tempCount: boolean = false;
+  public selectModal!: string;
+  public employeeLinkSkill!: Employee;
   
 
-constructor(fb: FormBuilder, private skillService: SkillService, private employeeLinkService: EmployeeLinkService, private router: Router){
+constructor(
+  fb: FormBuilder,
+  private skillService: SkillService,
+  private employeeLinkService: EmployeeLinkService,
+  private router: Router,
+  private route: ActivatedRoute
+  ){
   this.addSkillForm = fb.group({
     comp:['',[
       Validators.required,
@@ -37,41 +45,6 @@ constructor(fb: FormBuilder, private skillService: SkillService, private employe
     ]]
   })
 
-  this.linkSKillForm = fb.group({
-    id: [],
-    martialStatus:[],
-    employeeCode: [],
-    street:[],
-    city:[],
-    positionType:[],
-    jobTitle:[],
-    startDate:[],
-    endDate:[],
-    pinCode:[],
-    civility: ['',[
-      Validators.required,
-      Validators.pattern(this.nameRegex)
-    ]],
-    lastName: ['',[
-      Validators.required,
-      Validators.pattern(this.nameRegex)
-    ]],
-    firstName: ['',[
-      Validators.required,
-    ]],
-    email: ['',[
-      Validators.required
-    ]],
-    phone: ['',[
-      Validators.required
-    ]],
-    dob: [],
-    skill:[],
-    imageUrl: [],
-    linkedIn: [],
-    sex: [],
-    hourlyPay:[]
-  })
 
   this.deleteSkillForm = fb.group({
     comp:['',[
@@ -82,6 +55,12 @@ constructor(fb: FormBuilder, private skillService: SkillService, private employe
 }
 
 ngOnInit() {
+  this.route.queryParams
+  .subscribe(params => {
+    console.log(params);
+    this.selectModal = params['selectModal'];
+    console.log(this.selectModal);
+  });
   this.getSkill();
 }
 
@@ -149,15 +128,19 @@ public addSkill(addSkillForm: NgForm): void{
 }
 
 public linkSkill(): void{
-  for(const skillAll of this.employeeLinkService.employeeToLink.skill){
-    this.tempArray.push(skillAll);
+  console.log(this.tempArray);
+  this.employeeLinkSkill =this.employeeLinkService.employeeToLink;
+  for (const skillTemp of this.employeeLinkSkill.skill){
+    this.tempArray.push(skillTemp);
   }
   
-  this.employeeLinkService.employeeToLink.skill=this.tempArray;
   console.log(this.tempArray);
-  this.linkSKillForm.setValue(this.employeeLinkService.employeeToLink);
-  console.log(this.linkSKillForm.value);
-  this.skillService.addSkillToEmployee(this.linkSKillForm.value).subscribe(
+
+  this.employeeLinkSkill.skill=this.tempArray;
+  
+
+  console.log(this.employeeLinkSkill);
+  this.skillService.addSkillToEmployee(this.employeeLinkSkill).subscribe(
     (_response: Employee) => {
       console.log(this.linkSKillForm.values)
       this.tempArray=[];

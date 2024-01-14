@@ -53,7 +53,7 @@
                           <div class="dropdown float-lg-end">
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
                             <div class="dropdown-menu">
-                                <a role="button" (click)=tempEmployees(employee)  routerLink="/employee/edit" class="text-reset" ><i class="fa fa-laptop" aria-hidden="true"></i> Compétences</a><br>
+                                <a role="button" (click)=tempEmployees(employee)  (click)=tempEmployees(employee) [routerLink]="['/employee/skill']" [queryParams]="{selectModal: 'linkSkillToEmployee'}" class="text-reset" ><i class="fa fa-laptop" aria-hidden="true"></i> Compétences</a><br>
                                 <a role="button" (click)=tempEmployees(employee)  routerLink="/mission/missionEmployee" class="text-reset" ><i class="fa fa-tasks" aria-hidden="true"></i> Mission</a><br>
                                 <a role="button" (click)=tempEmployees(employee)  [routerLink]="['/employee/exp']" [queryParams]="{form: 'edit'}" class="text-reset" ><i class="fa fa-edit" aria-hidden="true"></i> Autre modification</a><br>
                                 <a role="button" (click)=tempEmployees(employee)  (click)=exportFile(employee) class="text-reset" ><i class="fa fa-laptop" aria-hidden="true"></i> Exporter</a><br>

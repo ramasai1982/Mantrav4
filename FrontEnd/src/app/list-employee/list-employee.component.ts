@@ -4,9 +4,9 @@ import { EmployeeService } from '../service/employee.service';
 import { Employee } from '../model/employee';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EmployeeLinkService } from '../service/employee-link.service';
-import { interval, map, of, tap } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { tap } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 
 @Component({
@@ -38,7 +38,10 @@ export class ListEmployeeComponent implements OnInit {
 
   constructor (fb: FormBuilder,
                 private employeeService: EmployeeService,
-                private employeeLinkService: EmployeeLinkService) {
+                private employeeLinkService: EmployeeLinkService,
+                private router: Router,
+                private route: ActivatedRoute
+                 ) {
     this.addForm = fb.group({
       martialStatus:[],
       street:[],
@@ -91,19 +94,34 @@ export class ListEmployeeComponent implements OnInit {
     this.tempEmployee = employeeToLink;
   }
 
+  public callSkill (employee: Employee): void{
+    this.router.navigate(['/employee/skill'], { queryParams: { selectModal: 'linkSkillToEmployeeModal', employeeLinkSkill: JSON.stringify(employee) } });
+  }
     
   public exportFile(employeeToExport: Employee): void{
     console.log(employeeToExport);
     var str = JSON.stringify(employeeToExport);
+    str = str
+        .split(',')
+        .join('\n')
+        .split("{")
+        .join("")
+        .split("}")
+        .join("")
+        .split("[")
+        .join("")
+        .split("]")
+        .join("");
     console.log(str);
 
-    let filename = `dataexport.${Date.now()}.csv`;    
+    let filename = `dataexport_${employeeToExport.id}_${employeeToExport.lastName}.csv`;    
     console.log(filename);            //create filename
-    let file = new File([str], filename, {type: 'text/csv'});     //create file
+    const file = new File([str], filename, {type: 'text/csv'});     //create file
     console.log(file);   
     let a = document.createElement('a');    //create anchor
     a.href = URL.createObjectURL(file);
     a.download = filename;
+    a.click();
   }
 
   public tempEmployeeMission(employeeToLink: Employee){
@@ -114,9 +132,7 @@ export class ListEmployeeComponent implements OnInit {
     this.employeeService.getEmployees().pipe(
       tap(() => {
         this.isInProgress = true,  console.log("Starts")
-      }),
-      tap(() => {       
-        this.isInProgress= false, console.log("Ends")})
+      })
     ).subscribe( 
       (response: Employee[]) => {
         this.employees = response;
@@ -126,9 +142,11 @@ export class ListEmployeeComponent implements OnInit {
             this.emptyEmployeeList=true;
           }
         }
+        this.isInProgress= false;
         this.employeeArray = response;
       },
       (error: HttpErrorResponse) =>{
+        this.isInProgress= false;
         alert(error.message);
       }
     )
@@ -150,7 +168,6 @@ export class ListEmployeeComponent implements OnInit {
       this.searchResultNothing = true;
       key.reset();
       this.getEmployees();
-
     }
     console.log(key.value.search);
     if(key.value.search===null || key.value.search.length===0){

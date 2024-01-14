@@ -1,13 +1,10 @@
 <!-- Add Skill Modal-->
 <div *ngIf = 'selectModal === "addSkillModal"'>
-  <div class="modal-dialog">
-    <div class="modal-content">
       <div class="form-area">
         <form [formGroup]='addSkillForm' (ngSubmit)="addSkill(addSkillForm)">
-        <div class="modal-header">
+        
           <h1 class="modal-title fs-5" id="addSkillModalLabel">Ajouter des compétences</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)=onClose(addSkillForm)></button>
-        </div>
+        
         <div class="list_skill">
         <div *ngFor="let list of skills; let i = index">
                 <a class="btn btn-secondary">
@@ -16,7 +13,7 @@
             </div>
         </div>
         <div class="form-group">
-            <div class="modal-body" type="reset">
+
                   <label> Competence</label>
                   <input
                   type="text"
@@ -32,15 +29,13 @@
                     >
                     Ce champ est requis
                     </div><br>
-            </div>
-            <div class="modal-footer">
+
+            
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)=onClose(addSkillForm) >Annuler</button>
               <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="addSkillForm.invalid" >Ajouter</button>
-            </div>
+            
         </div>
         </form>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -50,7 +45,6 @@
     <div class="modal-content">   
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="deleteSkillModalLabel">Supprimer des compétences</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)=onCloseDelete()></button>
         </div>
         <div class="list_skill">
             <div *ngFor="let list of skills; let i = index">
@@ -77,13 +71,10 @@
 </div>
 
 <!-- Link Skill to an Employee Modal-->
-<div *ngIf = 'selectModal === "linkSkillToEmployeeModal"'>
-  <div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="linkSkillToEmployeeModal">Associer des compétences</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)=onCloseLinkSkill()></button><br>
-        </div>
+<div *ngIf = 'selectModal === "linkSkillToEmployee"'>
+  
+          <h1 >Associer des compétences</h1>
+
         <div><p>Clicker sur les compétences à associer</p></div>
         <div class="list_skill">
             <div *ngFor="let list of skills">
@@ -100,12 +91,8 @@
           </div>
             <span *ngIf="tempArray.length!==0"><a class="btn btn-info"> &#187; À associer </a></span>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" data-bs-dismiss="modal" (click)=onCloseLinkSkill() >Annuler</button>
-          <button class="btn btn-primary" data-bs-dismiss="modal" [disabled]="tempArray.length===0" (click)="linkSkill()">Associer</button>
-        </div>
-    </div>
-  </div>
+          <button class="btn btn-secondary" (click)=onCloseLinkSkill() >Annuler</button>
+          <button class="btn btn-primary"[disabled]="tempArray.length===0" (click)="linkSkill()">Associer</button>
 </div>
 
 
